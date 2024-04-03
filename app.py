@@ -76,18 +76,7 @@ def logo_generator(user_specification):
         input_type=InputType.TEXT,
         model=open_ai_model_image,
         log_output=True,
-        instructions="Create a fresh logo concept to the given description. Minimalistic style. [IMPORTANT!] Avoid any text or numbers in the image.",
-        default_input=user_specification
-    )
-
-    logo_generator_image_sustainable = Task(
-        name="Logo Generation",
-        agent=graphic_designer,
-        output_type=OutputType.IMAGE,
-        input_type=InputType.TEXT,
-        model=open_ai_model_image,
-        log_output=True,
-        instructions="Create a sustainable captivating logo to the given description. Minimalistic style. [IMPORTANT!] Avoid any text or numbers in the image.",
+        instructions="Generate a fresh logo concept to the given description. Minimalistic style. [IMPORTANT!] Avoid any text or numbers in the image.",
         default_input=user_specification
     )
 
@@ -98,7 +87,7 @@ def logo_generator(user_specification):
         input_type=InputType.TEXT,
         model=open_ai_model_image,
         log_output=True,
-        instructions="Craft a dynamic logo to the given description. Minimalistic style. [IMPORTANT!] Avoid any text or numbers in the image.",
+        instructions="Generate a dynamic logo to the given description. Minimalistic style. [IMPORTANT!] Avoid any text or numbers in the image.",
         default_input=user_specification
     )
 
@@ -109,7 +98,7 @@ def logo_generator(user_specification):
         input_type=InputType.TEXT,
         model=open_ai_model_image,
         log_output=True,
-        instructions="Craft a luxury standout logo to the given description. Minimalistic style. [IMPORTANT!] Avoid any text or numbers in the image.",
+        instructions="Generate a luxury standout logo to the given description. Minimalistic style. [IMPORTANT!] Avoid any text or numbers in the image.",
         default_input=user_specification
     )
 
@@ -124,7 +113,6 @@ def logo_generator(user_specification):
         tasks=[
             logo_generator_image,
             logo_generator_image_innovative,
-            logo_generator_image_sustainable,
             logo_generator_image_dynamic,
             logo_generator_image_luxury
         ],
@@ -140,30 +128,30 @@ if __name__ == "__main__":
     button=st.button('Submit')
     if (button==True):
         generated_output = logo_generator(user_specification=user_input)
-        image_file_name = generated_output[0]['task_output'].local_file_path
-        st.header("Logo's for your Business")
-        st.image(image_file_name, caption='Logo Generator - Lyzr')
-        st.markdown('---')
 
-        st.subheader('Innovative Logo')
-        second_image_file_name = generated_output[1]['task_output'].local_file_path
-        st.image(second_image_file_name, caption='Logo Generator - Lyzr')
-        st.markdown('---')
+        col1, col2 = st.columns(2)
 
-        st.subheader('Sustainable Logo')
-        third_image_file_name = generated_output[2]['task_output'].local_file_path
-        st.image(third_image_file_name, caption='Logo Generator - Lyzr')
-        st.markdown('---')
+        with col1:
+            image_file_name = generated_output[0]['task_output'].local_file_path
+            st.subheader("Logo")
+            st.image(image_file_name, caption='Logo Generator - Lyzr')
+            st.markdown('---')
 
-        st.subheader('Dynamic Logo')
-        fourth_image_file_name = generated_output[3]['task_output'].local_file_path
-        st.image(fourth_image_file_name, caption='Logo Generator - Lyzr')
-        st.markdown('---')
+            st.subheader('Innovative Logo')
+            second_image_file_name = generated_output[1]['task_output'].local_file_path
+            st.image(second_image_file_name, caption='Logo Generator - Lyzr')
+            st.markdown('---')
+        
+        with col2:
+            st.subheader('Dynamic Logo')
+            fourth_image_file_name = generated_output[2]['task_output'].local_file_path
+            st.image(fourth_image_file_name, caption='Logo Generator - Lyzr')
+            st.markdown('---')
 
-        st.subheader('Luxury Logo')
-        fifth_image_file_name = generated_output[4]['task_output'].local_file_path
-        st.image(fifth_image_file_name, caption='Logo Generator - Lyzr')
-        st.markdown('---')
+            st.subheader('Luxury Logo')
+            fifth_image_file_name = generated_output[3]['task_output'].local_file_path
+            st.image(fifth_image_file_name, caption='Logo Generator - Lyzr')
+            st.markdown('---')
 
    
     with st.expander("ℹ️ - About this App"):
